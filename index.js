@@ -48,6 +48,18 @@ app.get("/movies1", async (req, res) => {
   }
 });
 
+app.post("/movies1", async (req, res) => {
+  const { title, author, genre } = req.body;
+
+  try {
+    const movieData = new Movies1({ title, author, genre });
+    await movieData.save();
+    res.status(201).json(movieData);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+})
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
