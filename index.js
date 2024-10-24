@@ -16,23 +16,23 @@ app.use(express.json());
 
 initializeDatabase();
 
-// const newMovie = {
-//   title: "Stree",
-//   director: "Amar Kaushik",
-//   genre: "Horror",
-// };
+const newMovie = {
+  title: "Stree",
+  director: "Amar Kaushik",
+  genre: "Horror",
+};
 
-// async function createMovie(newMovie) {
-//   try {
-//     const movie = new Movies1(newMovie);
-//     const saveMovie = await movie.save();
-//     console.log("New Movie data:", saveMovie);
-//   } catch (error) {
-//     throw error;
-//   }
-// }
+async function createMovie(newMovie) {
+  try {
+    const movie = new Movies1(newMovie);
+    const saveMovie = await movie.save();
+    console.log("New Movie data:", saveMovie);
+  } catch (error) {
+    throw error;
+  }
+}
 
-// createMovie(newMovie);
+createMovie(newMovie);
 
 app.get("/", (req, res) => {
   res.send("Hello, Express");
@@ -49,7 +49,7 @@ app.get("/movies1", async (req, res) => {
 });
 
 app.post("/movies1", async (req, res) => {
-  const { title, author, genre } = req.body;
+  const { title, director, genre } = req.body;
 
   try {
     const movieData = new Movies1({ title, author, genre });
