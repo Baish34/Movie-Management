@@ -48,6 +48,20 @@ app.get("/movies1", async (req, res) => {
   }
 });
 
+// Get a specific movie by ID
+app.get("/movies1/:id", async (req, res) => {
+  const movieId = req.params.id;
+  try {
+    const movie = await Movies1.findById(movieId);
+    if (!movie) {
+      return res.status(404).json({ error: "Movie not found" });
+    }
+    res.json(movie);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 app.post("/movies1", async (req, res) => {
   const { title, director, genre } = req.body;
 
