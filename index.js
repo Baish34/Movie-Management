@@ -74,6 +74,48 @@ app.post("/movies1", async (req, res) => {
   }
 })
 
+// Update a movie
+app.put("/movies1/:id", async (req, res) => {
+  const movieId = req.params.id;
+  const updatedMovieData = req.body;
+
+  try {
+    const updatedMovie = await Movies1.findByIdAndUpdate(
+      movieId,
+      updatedMovieData,
+      { new: true }
+    );
+    if (!updatedMovie) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+
+    res.status(200).json(updatedMovie);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Delete a movie
+app.delete("/movies1/:id", async (req, res) => {
+  const movieId = req.params.id;
+
+  try {
+    const deletedMovie = await Movies1.findByIdAndRemove(movieId);
+
+    if (!deletedMovie) {
+      return res.status(404).json({ error: "Movie not found" });
+    }
+
+    res.status(200).json({
+      message: "Movie deleted successfully",
+      movie: deletedMovie,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
